@@ -56,4 +56,18 @@ class EventoController extends Controller
         return redirect()->route('eventos.show', $evento->id)
             ->with('sucesso', 'Sua pergunta foi enviada com sucesso!');
     }
+
+    /**
+     * Sprint 03
+     */
+    public function show (Evento $evento)
+    {
+        $perguntas = $evento -> perguntas()
+                             -> where('is_public', true )
+                             ->with('user')
+                             ->latest()
+                             ->paginate(10);
+        
+        return view('eventos.show', compact('evento', 'perguntas'));
+    }
 }
