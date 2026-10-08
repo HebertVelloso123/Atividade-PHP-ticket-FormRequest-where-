@@ -70,4 +70,8 @@ class EventoController extends Controller
         
         return view('eventos.show', compact('evento', 'perguntas'));
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 591074f (Atualizando arquivos do projeto)

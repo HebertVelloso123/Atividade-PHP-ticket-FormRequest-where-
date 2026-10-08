@@ -60,3 +60,52 @@
     </div>
 </div>
 @endsection
+
+  <!-- sprint 04 -->
+  <form action="{{ route('perguntas.store', $evento->id) }}" method="POST" class="mb-8">
+    @csrf
+
+    <div class="mb-4">
+        <label for="conteudo" class="block text-sm font-medium text-gray-700 mb-1">
+            Faça sua pergunta
+        </label>
+        
+        <textarea 
+            name="conteudo" 
+            id="conteudo" 
+            rows="3" 
+            placeholder="Digite sua pergunta aqui..."
+            class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 transition-colors @error('conteudo') border-red-500 focus:ring-red-200 @else border-gray-300 focus:ring-blue-200 focus:border-blue-500 @enderror"
+        >{{ old('conteudo') }}</textarea>
+
+        @error('conteudo')
+            <p class="text-red-500 text-sm mt-1 font-medium">{{ $message }}</p>
+        @enderror
+    </div>
+
+    <button 
+        type="submit" 
+        class="bg-blue-600 text-white font-semibold px-5 py-2.5 rounded-md hover:bg-blue-700 active:bg-blue-800 transition-colors duration-150 shadow-sm"
+    >
+        Enviar Pergunta
+    </button>
+</form>
+
+
+<div class="space-y-4">
+    <h2 class="text-xl font-bold text-gray-800 mb-4">Perguntas do Evento</h2>
+
+    @forelse($evento->perguntas as $pergunta)
+        {{-- Card da pergunta --}}
+        <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 mb-4">
+            <p class="text-gray-800 text-base leading-relaxed mb-2">
+                {{ $pergunta->conteudo }}
+            </p>
+            <div class="flex items-center justify-between text-xs text-gray-500">
+                <span>Enviado {{ $pergunta->created_at->diffForHumans() }}</span>
+            </div>
+        </div>
+    @empty
+        <p class="text-gray-500 italic">Nenhuma pergunta enviada ainda. Seja o primeiro a perguntar!</p>
+    @endforelse
+</div>
